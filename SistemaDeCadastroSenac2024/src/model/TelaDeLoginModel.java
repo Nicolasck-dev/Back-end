@@ -1,6 +1,7 @@
 package model;
 
 import controller.*;
+import view.InterfaceView;
 
 import java.sql.*;
 import java.util.*;
@@ -12,20 +13,22 @@ public class TelaDeLoginModel {
 
         try {
             Connection conexao = MySQLConnector.conectar();
-            String  strSqlLogin = "select * from `db_senac`.`tbl_senac` where email = '" + 
-            login + "' and senha = '" +  senha + "';";
-            Statement stmSqlLogin = conexao.createStatement(); 
-            ResultSet rstSqlLogin = stmSqlLogin.executeQuery(strSqlLogin); 
-
+            String strSqlLogin = "select * from `db_senac`.`tbl_senac` where email = '" + login + "' and senha = '" + senha + "';";
+            Statement stmSqlLogin = conexao.createStatement();
+            ResultSet rstSqlLogin = stmSqlLogin.executeQuery(strSqlLogin);
             if (rstSqlLogin.next()) {
-                TelaDeLoginController.notificarUsuario("Login realizado com sucesso"); 
+                InterfaceView.notificarUsuario("Login " + rstSqlLogin.getString("email") + " realizado com sucesso.", TelaDeLoginController.lblNotificacoes);
+                TelaDeLoginController.abrirTelaDeMenu();
+                InterfaceView.idLoginAtual = rstSqlLogin.getString("id");
             } else {
-                TelaDeLoginController.notificarUsuario("Não foi possivel encontrar o login e/ou senha digitados. Por favor, verifique e tente novamente."); 
+                InterfaceView.notificarUsuario("Não foi possível encontrar o login e/ou senha digitados. Por favor, verifique e tente novamente.", TelaDeLoginController.lblNotificacoes);
             }
+            stmSqlLogin.close();
         } catch (Exception e) {
-            TelaDeLoginController.notificarUsuario("Houve um problema e não sera possivel realizar o login neste momento. Por favor, tente novamente mais tarde.");
-            System.err.println("Ops! Deu ruim, se liga no erro: " + e); 
+            InterfaceView.notificarUsuario("Houve um problema e não será possível realizar o login neste momento. Por favor, tente novamente mais tarde.", TelaDeLoginController.lblNotificacoes);
+            System.err.println("Ops! Deu ruim, se liga no erro: " + e);
         }
+
         return resultados;
     }
 }
