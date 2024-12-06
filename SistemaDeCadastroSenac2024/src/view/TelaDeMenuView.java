@@ -1,5 +1,7 @@
 package view;
-import controller.*;
+/**
+ * import controller.*;
+ */
 
 import java.awt.*;
 import java.awt.event.*;
@@ -13,6 +15,7 @@ public class TelaDeMenuView extends JFrame {
     private final JMenuItem pesquisarItem;
     private final JMenuItem atualizarItem;
     private final JMenuItem removerItem;
+    private final JMenuItem sairItem;
 
     public TelaDeMenuView() {
         super("Tela de Menu");
@@ -25,13 +28,16 @@ public class TelaDeMenuView extends JFrame {
         pesquisarItem = new JMenuItem("Pesquisar");
         atualizarItem = new JMenuItem("Atualizar");
         removerItem = new JMenuItem("Remover");
+        sairItem = new JMenuItem("Sair");
 
         cadastroMenu.add(novoItem);
         cadastroMenu.add(pesquisarItem);
         cadastroMenu.add(atualizarItem);
         cadastroMenu.add(removerItem);
+        cadastroMenu.add(sairItem);
 
         menuBar.add(cadastroMenu);
+
 
         setJMenuBar(menuBar);
 
@@ -41,7 +47,16 @@ public class TelaDeMenuView extends JFrame {
             new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent event) {
-                    JOptionPane.showMessageDialog(null,"Você clicou no menu: " + event.getActionCommand());
+                    TelaDeCadastroView.appTelaDeCadastroView = new TelaDeCadastroView();
+                    TelaDeCadastroView.appTelaDeCadastroView.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+                    appTelaDeMenuView.setVisible(false);
+                    TelaDeCadastroView.appTelaDeCadastroView.addWindowListener(
+                        new WindowAdapter() {
+                            public void windowClosing(WindowEvent e) {
+                                appTelaDeMenuView.setVisible(true);
+                            }
+                        }
+                    );
                 }
             }
         );
@@ -50,7 +65,16 @@ public class TelaDeMenuView extends JFrame {
             new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent event) {
-                    JOptionPane.showMessageDialog(null,"Você clicou no menu: " + event.getActionCommand());
+                    TelaDePesquisaView.appTelaDePesquisaView = new TelaDePesquisaView();
+                    TelaDePesquisaView.appTelaDePesquisaView.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+                    appTelaDeMenuView.setVisible(false);
+                    TelaDePesquisaView.appTelaDePesquisaView.addWindowListener(
+                        new WindowAdapter() {
+                            public void windowClosing(WindowEvent e) {
+                                appTelaDeMenuView.setVisible(true);
+                            }
+                        }
+                    );
                 }
             }
         );
@@ -59,7 +83,16 @@ public class TelaDeMenuView extends JFrame {
             new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent event) {
-                    JOptionPane.showMessageDialog(null,"Você clicou no menu: " + event.getActionCommand());
+                    TelaDeAtualizacaoView.appTelaDeAtualizacaoView = new TelaDeAtualizacaoView();
+                    TelaDeAtualizacaoView.appTelaDeAtualizacaoView.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+                    appTelaDeMenuView.setVisible(false);
+                    TelaDeAtualizacaoView.appTelaDeAtualizacaoView.addWindowListener(
+                        new WindowAdapter() {
+                            public void windowClosing(WindowEvent e) {
+                                appTelaDeMenuView.setVisible(true);
+                            }
+                        }
+                    );
                 }
             }
         );
@@ -68,17 +101,48 @@ public class TelaDeMenuView extends JFrame {
             new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent event) {
-                    JOptionPane.showMessageDialog(null,"Você clicou no menu: " + event.getActionCommand());
+                    TelaDeRemoverView.appTelaDeRemoverView = new TelaDeRemoverView();
+                    TelaDeRemoverView.appTelaDeRemoverView.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+                    appTelaDeMenuView.setVisible(false);
+                    TelaDeRemoverView.appTelaDeRemoverView.addWindowListener(
+                        new WindowAdapter() {
+                            public void windowClosing(WindowEvent e) {
+                                appTelaDeMenuView.setVisible(true);
+                            }
+                        }
+                    );
                 }
             }
         );
+
+        sairItem.addActionListener(
+            new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent event) {
+                    System.out.println("Aqui ok");
+                    if (JOptionPane.showConfirmDialog(null, "Deseja mesmo sair do sistema?") == 0) {
+                        System.exit(0);
+                    }
+                }
+            }
+        );
+
+        setSize(300,300);
+        setVisible(true);
     }
 
     public static TelaDeMenuView appTelaDeMenuView;
     public static void main(String[] args) {
         appTelaDeMenuView = new TelaDeMenuView();
         appTelaDeMenuView.setDefaultCloseOperation(EXIT_ON_CLOSE);
-        appTelaDeMenuView.setSize(200,200);
-        appTelaDeMenuView.setVisible(true);
+
+        appTelaDeMenuView.addWindowListener(
+            new WindowAdapter() {
+                public void windowClosing(WindowEvent e) {
+                    InterfaceView.removerImagensInuteis();
+                }
+            }
+        );
     }
 }
+

@@ -6,9 +6,11 @@ import java.awt.event.*;
 import javax.swing.*;
 
 public class TelaDePesquisaView extends JFrame {
+    public static JLabel lblFoto;
     public static final JTextField txtPesquisa = new JTextField(20);
     public final JButton btnPesquisar;
     public final JButton btnReiniciarPesquisa;
+    public final JButton btnHistoricoPesquisa;
 
     public final JLabel lblId;
     public static final JTextField txtId = new JTextField(10);
@@ -19,71 +21,62 @@ public class TelaDePesquisaView extends JFrame {
     public final JLabel lblEmail;
     public static final JTextField txtEmail = new JTextField(10);
 
-    public static final JButton btnPrimeiro = new JButton("<<");;
-    public static final JButton btnAnterior = new JButton("<");;
-    public static final JButton btnProximo = new JButton(">");;
-    public static final JButton btnUltimo = new JButton(">>");;
+    public static final JButton btnPrimeiro = new JButton("<<");
+    public static final JButton btnAnterior = new JButton("<");
+    public static final JButton btnProximo = new JButton(">");
+    public static final JButton btnUltimo = new JButton(">>");
 
     public static final JLabel lblNotificacoes = new JLabel("Notificações", SwingConstants.CENTER);
 
+    public static GridBagLayout gbLayout;
+    public static GridBagConstraints gbConstraints;
+
     public TelaDePesquisaView() {
         super("Tela de Pesquisa");
-        setLayout(new GridLayout(7,1,5,5));
+        gbLayout = new GridBagLayout();
+        setLayout(gbLayout);
+        gbConstraints = new GridBagConstraints();
 
-        JPanel linhaInputPesquisa = new JPanel(new GridLayout(1,1));
-        // txtPesquisa = new JTextField(20);
-        linhaInputPesquisa.add(txtPesquisa);
-        add(linhaInputPesquisa);
+        lblFoto = new JLabel("", SwingConstants.CENTER);
+        lblFoto.setIcon(new ImageIcon(new ImageIcon(InterfaceView.localViewFolder + "\\imagem-padrao.jpg").getImage().getScaledInstance(100, 100, Image.SCALE_DEFAULT)));
+        InterfaceView.addComponent(lblFoto, 0, 0, 4, 2, gbLayout, gbConstraints, this);
 
-        JPanel linhaBotaoPesquisar = new JPanel(new GridLayout(1,2));
+        InterfaceView.addComponent(txtPesquisa, 2, 0, 4, 1, gbLayout, gbConstraints, this);
 
         btnPesquisar = new JButton("Pesquisar");
         btnPesquisar.setEnabled(false);
-        linhaBotaoPesquisar.add(btnPesquisar);
+        InterfaceView.addComponent(btnPesquisar, 3, 0, 1, 1, gbLayout, gbConstraints, this);
 
-        btnReiniciarPesquisa = new JButton("Reiniciar Pesquisa");
-        linhaBotaoPesquisar.add(btnReiniciarPesquisa);
-        add(linhaBotaoPesquisar);
+        btnReiniciarPesquisa = new JButton("Reiniciar");
+        InterfaceView.addComponent(btnReiniciarPesquisa, 3, 1, 2, 1, gbLayout, gbConstraints, this);
 
-        JPanel linhaId = new JPanel(new GridLayout(1,2));
+        btnHistoricoPesquisa = new JButton("Histórico");
+        InterfaceView.addComponent(btnHistoricoPesquisa, 3, 3, 1, 1, gbLayout, gbConstraints, this);
+
         lblId = new JLabel("Id:", SwingConstants.RIGHT);
-        // txtId = new JTextField(10);
+        InterfaceView.addComponent(lblId, 4, 0, 2, 1, gbLayout, gbConstraints, this);
+
         txtId.setEditable(false);
-        linhaId.add(lblId);
-        linhaId.add(txtId);
-        add(linhaId);
+        InterfaceView.addComponent(txtId, 4, 2, 2, 1, gbLayout, gbConstraints, this);
 
-        JPanel linhaNome = new JPanel(new GridLayout(1,2));
         lblNome = new JLabel("Nome:", SwingConstants.RIGHT);
-        // txtNome = new JTextField(10);
+        InterfaceView.addComponent(lblNome, 5, 0, 2, 1, gbLayout, gbConstraints, this);
+
         txtNome.setEditable(false);
-        linhaNome.add(lblNome);
-        linhaNome.add(txtNome);
-        add(linhaNome);
+        InterfaceView.addComponent(txtNome, 5, 2, 2, 1, gbLayout, gbConstraints, this);
 
-        JPanel linhaEmail = new JPanel(new GridLayout(1,2));
         lblEmail = new JLabel("Email:", SwingConstants.RIGHT);
-        // txtEmail = new JTextField(10);
+        InterfaceView.addComponent(lblEmail, 6, 0, 2, 1, gbLayout, gbConstraints, this);
+
         txtEmail.setEditable(false);
-        linhaEmail.add(lblEmail);
-        linhaEmail.add(txtEmail);
-        add(linhaEmail);
+        InterfaceView.addComponent(txtEmail, 6, 2, 2, 1, gbLayout, gbConstraints, this);
 
-        JPanel linhaBotoes = new JPanel(new GridLayout(1,4));
-        // btnPrimeiro = new JButton("<<");
-        // btnAnterior = new JButton("<");
-        // btnProximo = new JButton(">");
-        // btnUltimo = new JButton(">>");
-        linhaBotoes.add(btnPrimeiro);
-        linhaBotoes.add(btnAnterior);
-        linhaBotoes.add(btnProximo);
-        linhaBotoes.add(btnUltimo);
-        add(linhaBotoes);
+        InterfaceView.addComponent(btnPrimeiro, 7, 0, 1, 1, gbLayout, gbConstraints, this);
+        InterfaceView.addComponent(btnAnterior, 7, 1, 1, 1, gbLayout, gbConstraints, this);
+        InterfaceView.addComponent(btnProximo, 7, 2, 1, 1, gbLayout, gbConstraints, this);
+        InterfaceView.addComponent(btnUltimo, 7, 3, 1, 1, gbLayout, gbConstraints, this);
 
-        JPanel linhaNotificacoes = new JPanel(new GridLayout(1,1));
-        // lblNotificacoes = new JLabel("Notificações", SwingConstants.CENTER);
-        linhaNotificacoes.add(lblNotificacoes);
-        add(linhaNotificacoes);
+        InterfaceView.addComponent(lblNotificacoes, 8, 0, 4, 1, gbLayout, gbConstraints, this);
 
         btnPrimeiro.addActionListener(
             new ActionListener() {
@@ -171,18 +164,32 @@ public class TelaDePesquisaView extends JFrame {
             }
         );
 
-        setSize(300,300);
+        btnHistoricoPesquisa.addActionListener(
+            new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    TelaDeHistoricoView.appTelaDeHistoricoView = new TelaDeHistoricoView();
+                    TelaDeHistoricoView.appTelaDeHistoricoView.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+
+                    TelaDeHistoricoView.appTelaDeHistoricoView.addWindowListener(
+                        new WindowAdapter() {
+                            public void windowClosing(WindowEvent e) {
+                                System.out.println("ok");
+                                TelaDePesquisaView.appTelaDePesquisaView.setVisible(true);
+                                TelaDeHistoricoView.appTelaDeHistoricoView.dispose();
+                            }
+                        }
+                    );
+
+                    setVisible(false);
+                }
+            }
+        );
+
+        setSize(300,340);
         setVisible(true);
 
         TelaDePesquisaController.inicializacaoDeRegistros();
-    }
-
-    public static void notificarUsuario(String strTexto) {
-        lblNotificacoes.setText(setHtmlFormat(strTexto));
-    }
-
-    public static String setHtmlFormat(String strTexto) {
-        return "<html><body>" + strTexto + "</body></html>";
     }
 
     public static void habilitarVoltar() {
@@ -226,21 +233,17 @@ public class TelaDePesquisaView extends JFrame {
         txtNome.setText("");
         txtEmail.setText("");
     }
+
     public static TelaDePesquisaView appTelaDePesquisaView;
     public static void main(String[] args) {
-        appTelaDePesquisaView = new TelaDePesquisaView();
-        appTelaDePesquisaView.setDefaultCloseOperation(EXIT_ON_CLOSE);
-
-        // appTelaDePesquisa.addKeyListener(
-        //     new KeyAdapter() {
-        //         @Override
-        //         public void keyReleased(KeyEvent e) {
-        //             System.out.println(e.getKeyCode());
-        //             if (e.getKeyCode() == 2) {
-                    
-        //             }
-        //         }
-        //     }
-        // );
+        // InterfaceView.idLoginAtual = "16";
+        if (InterfaceView.idLoginAtual.equals("")) {
+            TelaDeLoginView.appTelaDeLoginView = new TelaDeLoginView();
+            TelaDeLoginView.appTelaDeLoginView.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        } else {
+            appTelaDePesquisaView = new TelaDePesquisaView();
+            appTelaDePesquisaView.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+            // InterfaceView.verificarLarguraEAltura(appTelaDeAtualizacaoView,lblNotificacoes);
+        }
     }
 }
