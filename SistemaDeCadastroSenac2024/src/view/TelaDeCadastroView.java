@@ -36,7 +36,7 @@ public class TelaDeCadastroView extends JFrame {
         gbConstraints = new GridBagConstraints();
 
         lblFoto = new JLabel("", SwingConstants.CENTER);
-        lblFoto.setIcon(new ImageIcon(new ImageIcon(InterfaceView.localViewFolder + "\\imagem-padrao.jpg.png").getImage().getScaledInstance(100, 100, Image.SCALE_DEFAULT)));
+        lblFoto.setIcon(new ImageIcon(new ImageIcon(InterfaceView.localViewFolder + "\\imagem-padrao.jpg").getImage().getScaledInstance(100, 100, Image.SCALE_DEFAULT)));
         InterfaceView.addComponent(lblFoto, 0, 0, 2, 2, gbLayout, gbConstraints, this);
 
         btnCarregarFoto = new JButton("Carregar foto");
@@ -131,19 +131,16 @@ public class TelaDeCadastroView extends JFrame {
         setVisible(true);
     }
 
-
-  
-
-    public static String setHtmlFormat(String str) {
-        return "<html><body>" + str + "</body></html>";
-    }
-
-    
-
     public static TelaDeCadastroView appTelaDeCadastroView;
     public static void main(String[] args) {
-        appTelaDeCadastroView = new TelaDeCadastroView();
-        appTelaDeCadastroView.setDefaultCloseOperation(EXIT_ON_CLOSE);
-        // InterfaceView.verificarLarguraEAltura(appTelaDeAtualizacaoViewlblNotificacoes);
+        // InterfaceView.idLoginAtual = "16";
+        if (InterfaceView.idLoginAtual.equals("")) {
+            TelaDeLoginView.appTelaDeLoginView = new TelaDeLoginView();
+            TelaDeLoginView.appTelaDeLoginView.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        } else {
+            appTelaDeCadastroView = new TelaDeCadastroView();
+            appTelaDeCadastroView.setDefaultCloseOperation(EXIT_ON_CLOSE);
+            // InterfaceView.verificarLarguraEAltura(appTelaDeAtualizacaoView,lblNotificacoes);
+        }
     }
 }
