@@ -23,8 +23,15 @@ public class TelaDeHistoricoView extends JFrame {
 
         gbLayout = new GridBagLayout();
         setLayout(gbLayout);
-
         gbConstraints = new GridBagConstraints();
+
+        try{
+            ImageIcon orifinalIcon = new ImageIcon("src\\view\\senac-logo.png");
+            Image resizedIcon = orifinalIcon.getImage().getScaledInstance(94, 95,Image.SCALE_SMOOTH);
+            setIconImage(resizedIcon);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         String[] strHistoricos = TelaDeHistoricoController.preencherHistorico();
         lstHistorico = new JList<String>(strHistoricos);

@@ -1,7 +1,4 @@
 package view;
-/**
- * import controller.*;
- */
 
 import java.awt.*;
 import java.awt.event.*;
@@ -19,6 +16,14 @@ public class TelaDeMenuView extends JFrame {
 
     public TelaDeMenuView() {
         super("Tela de Menu");
+
+        try{
+            ImageIcon orifinalIcon = new ImageIcon("src\\view\\senac-logo.png");
+            Image resizedIcon = orifinalIcon.getImage().getScaledInstance(94, 95,Image.SCALE_SMOOTH);
+            setIconImage(resizedIcon);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         cadastroMenu = new JMenu("Cadastro");
         lblNomeDaTela = new JLabel("Tela de Menu", SwingConstants.CENTER);

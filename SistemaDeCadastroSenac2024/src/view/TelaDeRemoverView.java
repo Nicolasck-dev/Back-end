@@ -32,6 +32,14 @@ public class TelaDeRemoverView extends JFrame {
         setLayout(gbLayout);
         gbConstraints = new GridBagConstraints();
 
+         try{
+            ImageIcon orifinalIcon = new ImageIcon("src\\view\\senac-logo.png");
+            Image resizedIcon = orifinalIcon.getImage().getScaledInstance(94, 95,Image.SCALE_SMOOTH);
+            setIconImage(resizedIcon);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         lblFoto = new JLabel("", SwingConstants.CENTER);
         lblFoto.setIcon(new ImageIcon(new ImageIcon(InterfaceView.localViewFolder + "\\imagem-padrao.jpg").getImage().getScaledInstance(100, 100, Image.SCALE_DEFAULT)));
         InterfaceView.addComponent(lblFoto, 0, 0, 4, 2, gbLayout, gbConstraints, this);
